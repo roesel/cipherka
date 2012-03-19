@@ -1,0 +1,29 @@
+====== CIPHERKA README ======
+  * Writing for Python 2.7 and graphical user interface GTK+.
+  * Commenting should be done in English, all objects should be named in English. 
+    * If you need to comment in czech, do it this way: '''cs Komentář, komentář, 
+komentář...''' so that it can be easily found/replaced.
+  * Variables should be underline_cased, methods and objects camelCased.
+  
+===== To-Do list =====   
+  v základní GUI
+  v první testovací modul (Martin)
+  v použít GtkFixed (pravděpodobně umožňuje umístění widgetů na pevné pozici v pixelech)
+  ? názvy GTK elementů (David)
+    * na tom bych se dohodl ve škole, tys pro ně už psal handlery atd.
+  ? změnit název funkce v modulech nebo process() v programu, aby se lišily 
+    * nechám na tobě, d.
+  * základní interface pro moduly (Martin)
+  v rozšířit funkčnost na unicode (asi jen u reverse modulu?)
+  * umožnit v GUI měnit používaný modul (Martin)
+  
+
+===== Návrhy =====
+  * Dokumentace programu a každého oficiálního modulu na webu (dokuwiki na broukej?)
+
+===== Changelog =====
+(new on top)
+  * 9. 2. 2012 - 12:13 - D - první verze modulu pro morseovku, přepínání ručně v test.py
+  * 3. 2. 2012 - 23:00 - M - drobné úpravy GUI (odsazení widgetů od okraje okna, rámečky pro text (nevim proč, ale trochu se liší od pole 'Klíč:'), (zakulacené "filechooserbuttons" nevypadají moc dobře vedle hranatých TextView, asi to bude chtít nějak vyřešit)), původní gui v gui_old2.xml
+  * 3. 2. 2012 - 1:44 - D - udělal jsem první verzi fixed layoutu a trochu jsem si pohrál s vlastnostnmi textových polí (a např. scrollování), už to myslím vypadá líp, čekám na komentáře
+  
