@@ -23,6 +23,7 @@ komentář...''' so that it can be easily found/replaced.
 
 ===== Changelog =====
 (new on top)
+  * 23.3. 2012 - testing out GitHub
   * 9. 2. 2012 - 12:13 - D - první verze modulu pro morseovku, přepínání ručně v test.py
   * 3. 2. 2012 - 23:00 - M - drobné úpravy GUI (odsazení widgetů od okraje okna, rámečky pro text (nevim proč, ale trochu se liší od pole 'Klíč:'), (zakulacené "filechooserbuttons" nevypadají moc dobře vedle hranatých TextView, asi to bude chtít nějak vyřešit)), původní gui v gui_old2.xml
   * 3. 2. 2012 - 1:44 - D - udělal jsem první verzi fixed layoutu a trochu jsem si pohrál s vlastnostnmi textových polí (a např. scrollování), už to myslím vypadá líp, čekám na komentáře
