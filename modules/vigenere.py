@@ -4,16 +4,22 @@
 # Imports
 import re
 
-shift_field=[]
+def info():
+    return {"name":"Vigenere (test)",
+            "desc":"Posouvání písmen podle jejich hodnoty.",
+            "doc":"http://bla.bla.cz/bla",
+            "version":"1"}
 
-def process(input, parameters=None):
+# Global variables
+shift_field=[]
+pass_pos=0
+
+def run(input, parameters=None):
     global shift_field
     shift_field=[]
-    return str(code(input, "letadlo"))	# Encode
-    #return str(code(input, "letadlo", True))	# Decode
+    return str(code(input, "letadlo"))    # Encode
+    #return str(code(input, "letadlo", True))    # Decode
 
-
-pass_pos=0
 def shiftIt():
     global pass_pos
     global shift_field

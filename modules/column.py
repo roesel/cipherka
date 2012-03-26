@@ -1,14 +1,20 @@
 #!/usr/bin/env python27
 #coding=utf8
-
-# Imports
-import re
-import math
-
-def process(input, parameters=None):
+def info():
+    return {"name":"Column (test)",
+            "desc":"Navrací text ve čtvercové mřížce s přeházenými sloupci.",
+            "doc":"http://bla.bla.cz/bla",
+            "version":"1"}
+    
+def run(input, parameters=None):
+    #Calling other methods
     return str(code(input))
     
 def code(string):
+    # Imports
+    import re
+    import math
+    
     length=len(string)
     sharp_side=math.sqrt(length)
     int_side=int(math.ceil(sharp_side))

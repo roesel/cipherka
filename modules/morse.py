@@ -1,10 +1,16 @@
 #!/usr/bin/env python27
 #coding=utf8
 
+def info():
+    return {"name":"Morse (test)",
+            "desc":"Překládá text do Morseovy abecedy.",
+            "doc":"http://bla.bla.cz/bla",
+            "version":"1"}
+
 # Imports
 import re
 
-def process(input, parameters=None):
+def run(input, parameters=None):
     return str(code(input))
     
 def code(string):

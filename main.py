@@ -64,7 +64,7 @@ class Main:
         self.method = method
         #self.module = __import__(method)    # Import module by name
         self.module = __import__(self.method, globals(), locals(), [self.method], -1)    # Import module by name and return it (not __init__.py)
-        return self.module.process(input, parameters)    # Call the function inside the module
+        return self.module.run(input, parameters)    # Call the function inside the module
 
     ## Odsud obsluhy událostí
     def on_start_clicked(self, widget):
