@@ -38,6 +38,22 @@
           </packing>
         </child>
         <child>
+          <object class="GtkEntry" id="entry2">
+            <property name="width_request">230</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="invisible_char">&#x25CF;</property>
+            <property name="invisible_char_set">True</property>
+            <property name="primary_icon_sensitive">True</property>
+            <property name="secondary_icon_sensitive">True</property>
+          </object>
+          <packing>
+            <property name="x">33</property>
+            <property name="y">238</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkLabel" id="label1">
             <property name="width_request">310</property>
             <property name="height_request">20</property>
@@ -131,6 +147,19 @@
           </packing>
         </child>
         <child>
+          <object class="GtkLabel" id="label3">
+            <property name="width_request">30</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="label" translatable="yes">Kl&#xED;&#x10D;:</property>
+          </object>
+          <packing>
+            <property name="x">6</property>
+            <property name="y">238</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkLabel" id="label4">
             <property name="width_request">51</property>
             <property name="height_request">30</property>
@@ -201,21 +230,6 @@
           <packing>
             <property name="x">5</property>
             <property name="y">276</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkToggleButton" id="settings_toggle">
-            <property name="label" translatable="yes">togglebutton</property>
-            <property name="width_request">102</property>
-            <property name="height_request">39</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <signal name="toggled" handler="on_settings_toggle_toggled"/>
-          </object>
-          <packing>
-            <property name="x">7</property>
-            <property name="y">236</property>
           </packing>
         </child>
       </object>

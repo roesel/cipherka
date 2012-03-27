@@ -17,7 +17,7 @@ class Main:
         self.builder = gtk.Builder()
         self.builder.add_from_file(sys.path[0] + '/' + 'gui.xml') 
         self.builder.connect_signals(self)       
-        self.w('window1').connect('destroy', lambda w: gtk.main_quit()) # zavření okna -> ukončení programu
+        self.w('main_window').connect('destroy', lambda w: gtk.main_quit()) # zavření okna -> ukončení programu
         self.all_modules = modules.__init__.__all__
         #print(self.all_modules)
         
@@ -50,7 +50,14 @@ class Main:
         ## Přidání obsluhy událostí
         self.w('modules_selector').connect('changed', self.changed_cb)
 
-        self.w('window1').show_all()
+        self.w('main_window').show_all()
+    
+    def show_settings_window(self):
+        self.builder.add_from_file(sys.path[0] + '/modules/' + 'morse_gui.xml')
+        self.w('settings_window').show_all()
+    
+    def on_settings_toggle_toggled(self, widget):
+        self.show_settings_window()
     
     def w(self, widgetname):
         '''Pomůcka pro stručný přístup k widgetům'''
