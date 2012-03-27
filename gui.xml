@@ -116,7 +116,7 @@
             <property name="spacing">2</property>
             <child>
               <object class="GtkLinkButton" id="linkbutton2">
-                <property name="label" translatable="yes">http://cipherka.com/</property>
+                <property name="label" translatable="yes">https://github.com/roesel/cipherka</property>
                 <property name="width_request">555</property>
                 <property name="height_request">20</property>
                 <property name="visible">True</property>
