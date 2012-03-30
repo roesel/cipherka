@@ -51,21 +51,22 @@ class Main:
         self.w('modules_selector').connect('changed', self.changed_cb)
 
         self.w('main_window').show_all()
+        
+        self.changed_cb(self.w("modules_selector"))
     
     def show_settings_window(self):
-        self.builder.add_from_file(sys.path[0] + '/modules/' + 'morse_gui.xml')
-        self.w('settings_window').show_all()
-    
-    def on_settings_toggle_toggled(self, widget):
-        self.show_settings_window()
-    
+        if self.w("settings_toggle").get_active():
+            self.w('settings_window').show()
+        else:
+            self.w('settings_window').hide()
+            
     def w(self, widgetname):
         '''Pomůcka pro stručný přístup k widgetům'''
         return self.builder.get_object(widgetname)
     
     def process(self, input, method, parameters=None):
         '''This function initiates encryption/decryption by calling the selected module and returning the result.'''
-        #sys.path.append('modules')	# Allow importing from folder
+        #sys.path.append('modules')    # Allow importing from folder
         #self.method = 'modules.' + method
         sys.path.append(os.path.join(sys.path[0], 'modules'))   # Allow importing from folder
         self.method = method
@@ -74,11 +75,14 @@ class Main:
         return self.module.run(input, parameters)    # Call the function inside the module
 
     ## Odsud obsluhy událostí
+    def on_settings_toggle_toggled(self, widget):
+        self.show_settings_window()
+    
     def on_start_clicked(self, widget):
         '''Calls the 'process' function and supplies it with necessary parameters.'''
         
         # Get selected module
-    	model = self.w('modules_selector').get_model()
+        model = self.w('modules_selector').get_model()
         index = self.w('modules_selector').get_active()
         
         selected_module = model[index][1]
@@ -95,9 +99,14 @@ class Main:
         self.w('outputText').set_text(output)
     
     def changed_cb(self, combobox):
-    	'''Detects change of module selection in order to show additional module settings.'''
+        '''Detects change of module selection in order to show additional module settings.'''
         model = combobox.get_model()
         index = combobox.get_active()
+        
+        self.builder.add_from_file(sys.path[0] + '/modules/' + 'morse_gui.xml')
+        self.w('settings_window').show_all()
+        self.w('settings_window').hide()
+        
         print "Hodnota změněna na ", model[index][1]
 
 
