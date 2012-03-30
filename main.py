@@ -56,7 +56,18 @@ class Main:
     
     def show_settings_window(self):
         if self.w("settings_toggle").get_active():
-            self.w('settings_window').show()
+            x_sett, y_sett = self.w('settings_window').get_position()
+            x_main, y_main = self.w('main_window').get_position()
+            #print x_sett-x_main
+            #print y_sett-y_main
+            if (x_sett-x_main==(180+490)) and (y_sett-y_main==(25-30)):
+                self.w('settings_window').show()
+            else: 
+                self.w('settings_window').set_position(gtk.WIN_POS_CENTER_ON_PARENT)
+                self.w('settings_window').show()
+                self.w('settings_window').move(x_main+670,y_main-5)
+                while gtk.events_pending():
+                    gtk.main_iteration(False)
         else:
             self.w('settings_window').hide()
             
@@ -104,9 +115,10 @@ class Main:
         index = combobox.get_active()
         
         self.builder.add_from_file(sys.path[0] + '/modules/' + 'morse_gui.xml')
+        self.w('settings_window').set_transient_for(self.w('main_window'))
         self.w('settings_window').show_all()
-        self.w('settings_window').hide()
         
+        self.w('settings_window').hide()
         print "Hodnota změněna na ", model[index][1]
 
 
