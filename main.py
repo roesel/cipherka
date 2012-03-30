@@ -33,19 +33,19 @@ class Main:
             icon = getattr(gtk, "STOCK_COLOR_PICKER")
             image = gtk.icon_theme_get_default().load_icon(icon,24,gtk.ICON_LOOKUP_USE_BUILTIN)
             muj_liststore.append([image,name])
-
+        
         # Set up a liststore for combobox1
         self.w("modules_selector").set_model(muj_liststore)
-
+        
         # Add renderers for pictures and text
         renderer = gtk.CellRendererPixbuf()
         self.w("modules_selector").pack_start(renderer, expand=False)
         self.w("modules_selector").add_attribute(renderer, 'pixbuf', 0)
-
+        
         renderer = gtk.CellRendererText()
         self.w("modules_selector").pack_start(renderer, expand=True)
         self.w("modules_selector").add_attribute(renderer, 'text', 1)        
-
+        
         # Pre-select of the first item and loading module accordingly
         self.w("modules_selector").set_active(0) 
         self.changed_cb(self.w("modules_selector"))
@@ -78,7 +78,9 @@ class Main:
                     gtk.main_iteration(False)
         else:
             self.w('settings_window').hide()
-            
+        #print(gtk.gdk.GdkEventType(gtk.gdk.DELETE))
+        
+    
     def w(self, widgetname):
         '''Pomůcka pro stručný přístup k widgetům'''
         return self.builder.get_object(widgetname)
@@ -93,11 +95,11 @@ class Main:
         self.module = __import__(self.method, globals(), locals(), [self.method], -1)    
         # Call the function inside the module
         return self.module.run(input, parameters)    
-
+    
     ## Event handlers from hereon
     def on_settings_toggle_toggled(self, widget):
         self.show_settings_window()
-    
+            
     def on_start_clicked(self, widget):
         '''Calls the 'process' function and supplies it with necessary parameters.'''
         
@@ -116,6 +118,16 @@ class Main:
         print('Output: ' + output)
         self.w('outputText').set_text(output)
     
+    def on_settings_window_delete_event(self, widget = None, event = None):
+        # Catch DELETE event (on settings_window close)
+        if event != None and event.type == gtk.gdk.DELETE:
+        	# Hide settings_window
+        	self.w("settings_toggle").set_active(False)
+        	# Update settings_window's visibility
+        	self.show_settings_window()
+        	# Cancel window close action (settings_window is already invisible)
+        	return True    
+    
     def changed_cb(self, combobox):
         '''Detects change of module selection in order to show additional module settings.'''
         model = combobox.get_model()
@@ -129,6 +141,7 @@ class Main:
         # Create a settings window and hide it (for now)    
         self.builder.add_from_file(sys.path[0] + '/modules/' + 'morse_gui.xml')
         self.w('settings_window').set_transient_for(self.w('main_window'))
+        self.w('settings_window').connect('delete-event', self.on_settings_window_delete_event)
         self.w('settings_window').set_gravity(gtk.gdk.GRAVITY_STATIC)
         #self.w('settings_window').show_all()
         #self.w('settings_window').hide()
