@@ -54,6 +54,7 @@ class Main:
         self.w('modules_selector').connect('changed', self.changed_cb)
         
         # Show the main window
+        self.w('main_window').set_gravity(gtk.gdk.GRAVITY_STATIC)
         self.w('main_window').show_all()
         
     def show_settings_window(self):
@@ -71,7 +72,7 @@ class Main:
                 # ...reset its position and move it accordingly
                 self.w('settings_window').set_position(gtk.WIN_POS_CENTER_ON_PARENT)
                 self.w('settings_window').show()
-                self.w('settings_window').move(x_main+670,y_main-5)
+                self.w('settings_window').move(x_main+675,y_main)
                 # Wait for the moving to finish
                 while gtk.events_pending():
                     gtk.main_iteration(False)
@@ -128,8 +129,9 @@ class Main:
         # Create a settings window and hide it (for now)    
         self.builder.add_from_file(sys.path[0] + '/modules/' + 'morse_gui.xml')
         self.w('settings_window').set_transient_for(self.w('main_window'))
-        self.w('settings_window').show_all()
-        self.w('settings_window').hide()
+        self.w('settings_window').set_gravity(gtk.gdk.GRAVITY_STATIC)
+        #self.w('settings_window').show_all()
+        #self.w('settings_window').hide()
         
         print "Hodnota změněna na ", model[index][1]
 
