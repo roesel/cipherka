@@ -13,13 +13,15 @@ import modules.__init__
 
 class Main: 
     def __init__(self):
-        ## Vytvoření widgetů a přidání obsluh událostí podle Glade
+        # Create of widgets and linking event handlers according to Glade
         self.builder = gtk.Builder()
         self.builder.add_from_file(sys.path[0] + '/' + 'gui.xml') 
-        self.builder.connect_signals(self)       
-        self.w('main_window').connect('destroy', lambda w: gtk.main_quit()) # zavření okna -> ukončení programu
+        self.builder.connect_signals(self) 
+              
+        # Closing the window should be handled as terminating the program
+        self.w('main_window').connect('destroy', lambda w: gtk.main_quit())
         self.all_modules = modules.__init__.__all__
-        #print(self.all_modules)
+        # print(self.all_modules)
         
         muj_liststore = gtk.ListStore(gtk.gdk.Pixbuf, str)
         #for name,icon in [['Plain Text', getattr(gtk, "STOCK_COLOR_PICKER")],
@@ -32,10 +34,10 @@ class Main:
             image = gtk.icon_theme_get_default().load_icon(icon,24,gtk.ICON_LOOKUP_USE_BUILTIN)
             muj_liststore.append([image,name])
 
-        ## Nastavení liststore s daty pro combobox1
+        # Set up a liststore for combobox1
         self.w("modules_selector").set_model(muj_liststore)
 
-        # U comboboxu1 přidáme renderery pro obrázek a text (viz lekce 17)
+        # Add renderers for pictures and text
         renderer = gtk.CellRendererPixbuf()
         self.w("modules_selector").pack_start(renderer, expand=False)
         self.w("modules_selector").add_attribute(renderer, 'pixbuf', 0)
@@ -44,28 +46,33 @@ class Main:
         self.w("modules_selector").pack_start(renderer, expand=True)
         self.w("modules_selector").add_attribute(renderer, 'text', 1)        
 
-        ## Předvybrání první položky 
-        self.w("modules_selector").set_active(0)
-
-        ## Přidání obsluhy událostí
+        # Pre-select of the first item and loading module accordingly
+        self.w("modules_selector").set_active(0) 
+        self.changed_cb(self.w("modules_selector"))
+        
+        # Add event handlers
         self.w('modules_selector').connect('changed', self.changed_cb)
-
+        
+        # Show the main window
         self.w('main_window').show_all()
         
-        self.changed_cb(self.w("modules_selector"))
-    
     def show_settings_window(self):
+        '''Showing/hiding the settings window.'''
+        # If the toggle button is active, show the settings window
         if self.w("settings_toggle").get_active():
+            # Get current position of main and setting windows
             x_sett, y_sett = self.w('settings_window').get_position()
             x_main, y_main = self.w('main_window').get_position()
-            #print x_sett-x_main
-            #print y_sett-y_main
+            # If the setting window is in the right position...
             if (x_sett-x_main==(180+490)) and (y_sett-y_main==(25-30)):
+                # ...show it.
                 self.w('settings_window').show()
             else: 
+                # ...reset its position and move it accordingly
                 self.w('settings_window').set_position(gtk.WIN_POS_CENTER_ON_PARENT)
                 self.w('settings_window').show()
                 self.w('settings_window').move(x_main+670,y_main-5)
+                # Wait for the moving to finish
                 while gtk.events_pending():
                     gtk.main_iteration(False)
         else:
@@ -81,11 +88,12 @@ class Main:
         #self.method = 'modules.' + method
         sys.path.append(os.path.join(sys.path[0], 'modules'))   # Allow importing from folder
         self.method = method
-        #self.module = __import__(method)    # Import module by name
-        self.module = __import__(self.method, globals(), locals(), [self.method], -1)    # Import module by name and return it (not __init__.py)
-        return self.module.run(input, parameters)    # Call the function inside the module
+        # Import module by name and return it (not __init__.py)
+        self.module = __import__(self.method, globals(), locals(), [self.method], -1)    
+        # Call the function inside the module
+        return self.module.run(input, parameters)    
 
-    ## Odsud obsluhy událostí
+    ## Event handlers from hereon
     def on_settings_toggle_toggled(self, widget):
         self.show_settings_window()
     
@@ -101,11 +109,9 @@ class Main:
         
         input = self.w('inputText').get_text(self.w('inputText').get_start_iter(), self.w('inputText').get_end_iter())
         print('Input: ' + input)
-        #self.output = self.process(self.input, 'morse', None) # Call the module "morse"
-        #output = self.process(input, 'vigenere', None) # Call the module "vigenere"
-        #self.output = self.process(self.input, 'flip', None) # Call the module "flip"
-        #self.output = self.process(self.input, 'reverse', None) # Call the module "reverse"
-        output = self.process(input, selected_module, None) # Call the module "vigenere"
+       
+        # Call the selected module
+        output = self.process(input, selected_module, None) 
         print('Output: ' + output)
         self.w('outputText').set_text(output)
     
@@ -114,19 +120,28 @@ class Main:
         model = combobox.get_model()
         index = combobox.get_active()
         
+        # If there was any opened settings window -> close it and reset the toggle button
+        if self.w('settings_window'):
+            self.w('settings_window').destroy()
+            self.w("settings_toggle").set_active(False)
+        
+        # Create a settings window and hide it (for now)    
         self.builder.add_from_file(sys.path[0] + '/modules/' + 'morse_gui.xml')
         self.w('settings_window').set_transient_for(self.w('main_window'))
         self.w('settings_window').show_all()
-        
         self.w('settings_window').hide()
+        
         print "Hodnota změněna na ", model[index][1]
 
 
 def myerr(exc_type, exc_value, tb): 
     import traceback; 
     traceback.print_exception(exc_type, exc_value, tb)
-    #raw_input()  # smažte pro výpis chyby bez pozastavení; přejmenujte na input() v pythonu3
-sys.excepthook = myerr      # úprava výpisu chyb, aby se program pozastavil po výpisu
+    #raw_input()  # comment out for error report without stopping
+# minor edit of error reporting -> program will now stop
+sys.excepthook = myerr      
 
-MainInstance = Main()       # inicializace hlavní třídy programu
-gtk.main()                  # program čeká na události, které vyvolá uživatel
+# Initialization of the main class
+MainInstance = Main()       
+# Wait for user input
+gtk.main()                  
