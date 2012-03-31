@@ -3,6 +3,7 @@
   <requires lib="gtk+" version="2.24"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkTextBuffer" id="inputText"/>
+  <object class="GtkTextBuffer" id="outputText"/>
   <object class="GtkWindow" id="main_window">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Cipherka v0.1</property>
@@ -81,6 +82,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="focus_on_click">False</property>
             <signal name="clicked" handler="on_start_clicked" swapped="no"/>
           </object>
           <packing>
@@ -229,6 +231,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="image">settings_image</property>
+            <property name="focus_on_click">False</property>
             <property name="image_position">top</property>
             <signal name="toggled" handler="on_settings_toggle_toggled" swapped="no"/>
           </object>
@@ -253,7 +256,6 @@
       </object>
     </child>
   </object>
-  <object class="GtkTextBuffer" id="outputText"/>
   <object class="GtkImage" id="settings_image">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
