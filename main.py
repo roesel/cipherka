@@ -53,10 +53,17 @@ class Main:
         # Add event handlers
         self.w('modules_selector').connect('changed', self.changed_cb)
         
+        # Get and give the versions of GTK and pyGTK
+        versions="gtk: "+str(gtk.gtk_version)+" pygtk: "+str(gtk.pygtk_version)+" cipherka: "+str(self.ciph_version())
+        self.w('versions_label').set_text(versions)
+        
         # Show the main window
         self.w('main_window').set_gravity(gtk.gdk.GRAVITY_STATIC)
         self.w('main_window').show_all()
-        
+    
+    def ciph_version(self):
+        return "alpha"    
+    
     def show_settings_window(self):
         '''Showing/hiding the settings window.'''
         # If the toggle button is active, show the settings window
@@ -143,8 +150,6 @@ class Main:
         self.w('settings_window').set_transient_for(self.w('main_window'))
         self.w('settings_window').connect('delete-event', self.on_settings_window_delete_event)
         self.w('settings_window').set_gravity(gtk.gdk.GRAVITY_STATIC)
-        #self.w('settings_window').show_all()
-        #self.w('settings_window').hide()
         
         print "Hodnota změněna na ", model[index][1]
 
