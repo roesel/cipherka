@@ -19,6 +19,7 @@ class Main:
         self.builder.connect_signals(self) 
               
         # Closing the window should be handled as terminating the program
+        self.w('main_window').connect('configure_event', self.on_main_window_configure_event)
         self.w('main_window').connect('destroy', lambda w: gtk.main_quit())
         self.all_modules = modules.__init__.__all__
         # print(self.all_modules)
@@ -107,6 +108,12 @@ class Main:
     def on_settings_toggle_toggled(self, widget):
         self.show_settings_window()
             
+    def on_main_window_configure_event(self, *args):
+        x, y   = self.w('main_window').get_position()
+        sx, sy = self.w('main_window').get_size()
+        tx = self.w('settings_window').get_style().xthickness
+        self.w('settings_window').move(x+sx+20,y)
+    
     def on_start_clicked(self, widget):
         '''Calls the 'process' function and supplies it with necessary parameters.'''
         
