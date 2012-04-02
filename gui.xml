@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <interface>
   <requires lib="gtk+" version="2.24"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkTextBuffer" id="inputText"/>
   <object class="GtkTextBuffer" id="outputText"/>
   <object class="GtkWindow" id="main_window">
-    <property name="can_focus">False</property>
     <property name="title" translatable="yes">Cipherka v0.1</property>
     <property name="resizable">False</property>
     <child>
@@ -13,13 +12,11 @@
         <property name="width_request">655</property>
         <property name="height_request">497</property>
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <child>
           <object class="GtkFileChooserButton" id="filechooserbutton1">
             <property name="width_request">30</property>
             <property name="height_request">202</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="title" translatable="yes">Input from file</property>
           </object>
           <packing>
@@ -32,7 +29,6 @@
             <property name="width_request">30</property>
             <property name="height_request">200</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="do_overwrite_confirmation">True</property>
             <property name="title" translatable="yes">Output to file</property>
           </object>
@@ -46,9 +42,8 @@
             <property name="width_request">310</property>
             <property name="height_request">20</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="xalign">0</property>
-            <property name="label" translatable="yes">Cipherka - program na šifrování všeho možného</property>
+            <property name="label" translatable="yes">Cipherka - program na &#x161;ifrov&#xE1;n&#xED; v&#x161;eho mo&#x17E;n&#xE9;ho</property>
           </object>
           <packing>
             <property name="x">6</property>
@@ -58,7 +53,6 @@
         <child>
           <object class="GtkLinkButton" id="linkbutton1">
             <property name="label" translatable="yes">help</property>
-            <property name="use_action_appearance">False</property>
             <property name="width_request">45</property>
             <property name="height_request">21</property>
             <property name="visible">True</property>
@@ -75,15 +69,14 @@
         </child>
         <child>
           <object class="GtkButton" id="start">
-            <property name="label" translatable="yes">Zašifruj!</property>
-            <property name="use_action_appearance">False</property>
+            <property name="label" translatable="yes">Za&#x161;ifruj!</property>
             <property name="width_request">100</property>
             <property name="height_request">30</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="focus_on_click">False</property>
-            <signal name="clicked" handler="on_start_clicked" swapped="no"/>
+            <signal name="clicked" handler="on_start_clicked"/>
           </object>
           <packing>
             <property name="x">550</property>
@@ -95,70 +88,10 @@
             <property name="width_request">225</property>
             <property name="height_request">30</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
           </object>
           <packing>
             <property name="x">65</property>
             <property name="y">238</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkStatusbar" id="statusbar1">
-            <property name="width_request">655</property>
-            <property name="height_request">21</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="spacing">5</property>
-            <child>
-              <object class="GtkLabel" id="filler">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="padding">145</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLinkButton" id="project_homepage_link">
-                <property name="label" translatable="yes">project homepage</property>
-                <property name="use_action_appearance">False</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="relief">none</property>
-                <property name="uri">http://github.com/roesel/cipherka</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="versions_label">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">gtk: (0,0,0) pygtk: (0,0,0) cipherka: "zero"</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="padding">10</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-          </object>
-          <packing>
-            <property name="y">476</property>
           </packing>
         </child>
         <child>
@@ -224,7 +157,6 @@
         </child>
         <child>
           <object class="GtkToggleButton" id="settings_toggle">
-            <property name="use_action_appearance">False</property>
             <property name="width_request">35</property>
             <property name="height_request">30</property>
             <property name="visible">True</property>
@@ -233,7 +165,7 @@
             <property name="image">settings_image</property>
             <property name="focus_on_click">False</property>
             <property name="image_position">top</property>
-            <signal name="toggled" handler="on_settings_toggle_toggled" swapped="no"/>
+            <signal name="toggled" handler="on_settings_toggle_toggled"/>
           </object>
           <packing>
             <property name="x">295</property>
@@ -245,7 +177,6 @@
             <property name="width_request">51</property>
             <property name="height_request">30</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Metoda:</property>
           </object>
           <packing>
@@ -253,12 +184,55 @@
             <property name="y">238</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkHBox" id="statusbar">
+            <property name="width_request">655</property>
+            <property name="height_request">21</property>
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkLabel" id="filler">
+                <property name="visible">True</property>
+              </object>
+              <packing>
+                <property name="padding">145</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLinkButton" id="project_homepage_link">
+                <property name="label" translatable="yes">project homepage</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="relief">none</property>
+                <property name="uri">http://github.com/roesel/cipherka</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="versions_label">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">gtk: (0,0,0) pygtk: (0,0,0) cipherka: "zero"</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="padding">10</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="y">476</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>
   <object class="GtkImage" id="settings_image">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
     <property name="stock">gtk-execute</property>
   </object>
 </interface>

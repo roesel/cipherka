@@ -83,7 +83,7 @@ class Main:
                 self.w('settings_window').move(x_main+675,y_main)
                 # Wait for the moving to finish
                 while gtk.events_pending():
-                    gtk.main_iteration(False)
+                    gtk.main_iteration()
         else:
             self.w('settings_window').hide()
         #print(gtk.gdk.GdkEventType(gtk.gdk.DELETE))
