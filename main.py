@@ -7,7 +7,7 @@ Web: --
 Version: --
 Description: --
 '''
-import os, sys, gtk
+import os, sys, gtk, webbrowser
 # Load list of 
 import modules.__init__
 
@@ -63,7 +63,7 @@ class Main:
         self.w('main_window').show_all()
     
     def ciph_version(self):
-        return "alpha"    
+        return "alpha"        
     
     def show_settings_window(self):
         '''Showing/hiding the settings window.'''
@@ -140,8 +140,15 @@ class Main:
         	# Update settings_window's visibility
         	self.show_settings_window()
         	# Cancel window close action (settings_window is already invisible)
-        	return True    
-    
+        	return True
+              
+    def open_link(self, widget):
+        # open in a new tab, if possible
+        new = 2 
+        # open a public URL, in this case, the webbrowser docs
+        url = "http://github.com/roesel/cipherka"
+        webbrowser.open(url,new=new)
+        
     def changed_cb(self, combobox):
         '''Detects change of module selection in order to show additional module settings.'''
         model = combobox.get_model()

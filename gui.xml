@@ -199,16 +199,16 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLinkButton" id="project_homepage_link">
+              <object class="GtkButton" id="project_home">
                 <property name="label" translatable="yes">project homepage</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="relief">none</property>
-                <property name="uri">http://github.com/roesel/cipherka</property>
+                <property name="focus_on_click">False</property>
+                <signal name="clicked" handler="open_link"/>
               </object>
               <packing>
-                <property name="expand">False</property>
                 <property name="position">1</property>
               </packing>
             </child>
