@@ -146,19 +146,23 @@ class Main:
         '''Detects change of module selection in order to show additional module settings.'''
         model = combobox.get_model()
         index = combobox.get_active()
+        modulename = model[index][1]
         
         # If there was any opened settings window -> close it and reset the toggle button
         if self.w('settings_window'):
             self.w('settings_window').destroy()
             self.w("settings_toggle").set_active(False)
         
-        # Create a settings window and hide it (for now)    
-        self.builder.add_from_file(sys.path[0] + '/modules/' + 'morse_gui.xml')
+        if os.path.exists(sys.path[0] + '/modules/' + modulename + '.gui'):
+            # Create a settings window and hide it (for now)    
+            self.builder.add_from_file(sys.path[0] + '/modules/' + modulename + '.gui')
+        else:
+            self.builder.add_from_file(sys.path[0] + '/modules/' + '__none__.gui')
+        
         self.w('settings_window').set_transient_for(self.w('main_window'))
         self.w('settings_window').connect('delete-event', self.on_settings_window_delete_event)
         self.w('settings_window').set_gravity(gtk.gdk.GRAVITY_STATIC)
-        
-        print "Hodnota změněna na ", model[index][1]
+        print "Hodnota změněna na ", modulename
 
 
 def myerr(exc_type, exc_value, tb): 
