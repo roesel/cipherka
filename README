@@ -6,8 +6,7 @@ komentář...''' so that it can be easily found/replaced.
   * Variables should be underline_cased, methods and objects camelCased.
   
 ===== To-Do list =====   
-  ? změnit název funkce v modulech nebo process() v programu, aby se lišily 
-    * nechám na tobě, d.
+  * main.py should get module settings (from window) and pass them (with the entered text) to selected module
 
 ===== Návrhy =====
   * Dokumentace programu a každého oficiálního modulu na webu (dokuwiki na broukej/github wiki)
