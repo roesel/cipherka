@@ -15,7 +15,7 @@ class Main:
     def __init__(self):
         # Create of widgets and linking event handlers according to Glade
         self.builder = gtk.Builder()
-        self.builder.add_from_file(sys.path[0] + '/' + 'gui.xml') 
+        self.builder.add_from_file(os.path.join(sys.path[0],'gui.xml')) 
         self.builder.connect_signals(self) 
               
         # Closing the window should be handled as terminating the program
