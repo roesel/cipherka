@@ -109,13 +109,42 @@ class Main:
         self.show_settings_window()
             
     def on_main_window_configure_event(self, *args):
-        x, y   = self.w('main_window').get_position()
+        x, y = self.w('main_window').get_position()
         sx, sy = self.w('main_window').get_size()
         tx = self.w('settings_window').get_style().xthickness
         self.w('settings_window').move(x+sx+20,y)
     
+    def get_widgets_in_widget_rec(self, widgets):
+    	widgetlist = []
+    	container_types = ["<type 'gtk.Window'>", "<type 'gtk.VBox'>"]
+    	#print('get_widgets_in_widget_rec', widgets, rec)
+    	#if str(type(widgetlist)) != "<type 'list'>":
+    	#	widgetlist = [widgetlist]
+    	for w in widgets:
+    		if str(type(w)) in container_types:	# If is a "container"
+    			#print('rec', type(w))
+    			widgetlist += self.get_widgets_in_widget_rec(w.get_children())
+    			#print('ret', widgetlist)
+    		else:
+    			#print('not rec', type(w))
+    			widgetlist.append(w)
+    	return widgetlist
+    
     def on_start_clicked(self, widget):
         '''Calls the 'process' function and supplies it with necessary parameters.'''
+        parameters = []
+        input_widgets = self.get_widgets_in_widget_rec([self.builder.get_object('settings_window')])
+        print(input_widgets)
+        #for widget in self.builder.get_object('settings_window').get_children():
+        #	print(widget.type)
+        #print(self.builder.get_object('settings_window').get_children())
+        #for widget in self.builder.get_objects():
+        	#print(widget.get_name())
+        	#print(widget)
+        	#print()
+        	#if str(type(widget)) == "<type 'gtk.Window'>":
+        	#	print(widget)
+        	#	print(widget.get_child())
         
         # Get selected module
         model = self.w('modules_selector').get_model()
