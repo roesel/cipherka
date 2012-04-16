@@ -7,6 +7,7 @@
   <object class="GtkWindow" id="main_window">
     <property name="title" translatable="yes">Cipherka v0.1</property>
     <property name="resizable">False</property>
+    <property name="icon">media/veve50.png</property>
     <child>
       <object class="GtkFixed" id="fixed1">
         <property name="width_request">655</property>
