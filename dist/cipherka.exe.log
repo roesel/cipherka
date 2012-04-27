@@ -1,0 +1,7 @@
+C:\Repa\cipherka\dist\cipherka.exe:192: GtkWarning: gtk_tree_path_append_index: assertion `index >= 0' failed
+C:\Repa\cipherka\dist\cipherka.exe:192: GtkWarning: gtk_tree_model_get_iter: assertion `path->depth > 0' failed
+Traceback (most recent call last):
+  File "cipherka.py", line 221, in <module>
+  File "cipherka.py", line 59, in __init__
+  File "cipherka.py", line 192, in changed_cb
+IndexError: could not find tree path

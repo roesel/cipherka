@@ -11,6 +11,17 @@ def info():
 import re
 
 def run(input, parameters=None):
+    #čistit české znaky
+    details = {"clean_cze":True, 
+               "treat_undefined":"jump/leave/replace", 
+               "replace_with":"", 
+               "replace_ch":True}
+    print details["clean_cze"]
+    #vyřešit co s nedefinovanymi
+    ##přeskočit
+    ##ponechat
+    ##nahradit znakem - field
+    #nahradit ch, ano/ne
     return str(code(input))
     
 def code(string):

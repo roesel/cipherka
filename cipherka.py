@@ -15,7 +15,14 @@ class Main:
     def __init__(self):
         # Create of widgets and linking event handlers according to Glade
         self.builder = gtk.Builder()
-        self.builder.add_from_file(os.path.join(sys.path[0],'gui.xml')) 
+        self.path = os.path.join(sys.path[0])
+        #self.path = os.path.dirname(__file__).replace('\\library.zip','')
+        #xml_file = open(os.path.join(path, 'gui.xml'))
+        if hasattr(sys,"frozen") and sys.frozen in ("windows_exe", "console_exe"):
+            self.builder.add_from_file(os.path.join('./', 'gui.xml'))
+        else:
+            self.builder.add_from_file(os.path.join(self.path, 'gui.xml'))
+        #self.builder.add_from_file(os.path.join(sys.path[0],'gui.xml')) 
         self.builder.connect_signals(self) 
               
         # Closing the window should be handled as terminating the program
@@ -182,7 +189,7 @@ class Main:
         '''Detects change of module selection in order to show additional module settings.'''
         model = combobox.get_model()
         index = combobox.get_active()
-        modulename = model[index][1]
+        modulename = model[index][1]      # ERROR ON COMPILATION HERE
         
         # If there was any opened settings window -> close it and reset the toggle button
         if self.w('settings_window'):
@@ -191,9 +198,11 @@ class Main:
         
         if os.path.exists(sys.path[0] + '/modules/' + modulename + '.gui'):
             # Create a settings window and hide it (for now)    
-            self.builder.add_from_file(sys.path[0] + '/modules/' + modulename + '.gui')
+            #self.builder.add_from_file(sys.path[0] + '/modules/' + modulename + '.gui')
+            self.modulenamegui = modulename + '.gui'
+            self.builder.add_from_file(os.path.join(self.path, 'modules', self.modulenamegui))            
         else:
-            self.builder.add_from_file(sys.path[0] + '/modules/' + '__none__.gui')
+            self.builder.add_from_file(os.path.join(self.path, 'modules', '__none__.gui'))
         
         self.w('settings_window').set_transient_for(self.w('main_window'))
         self.w('settings_window').connect('delete-event', self.on_settings_window_delete_event)
