@@ -11,25 +11,28 @@ def info():
 import re
 
 def run(input, parameters=None):
+    # Load defaults parameters if none given
+    if parameters == None:
+    	parameters = {'unrec_replace': False,
+    	              'unrec_keep': True,
+    	              'unrec_ignore': False,
+    	              'remove_diacritics': True,
+    	              'replace_C_H_with_CH': False}
     #čistit české znaky
-    details = {"clean_cze":True, 
-               "treat_undefined":"jump/leave/replace", 
-               "replace_with":"", 
-               "replace_ch":True}
-    print details["clean_cze"]
     #vyřešit co s nedefinovanymi
     ##přeskočit
     ##ponechat
     ##nahradit znakem - field
     #nahradit ch, ano/ne
-    return str(code(input))
+    return str(code(input, parameters))
     
-def code(string):
+def code(string, parameters):
     # Optional: Pre-cleaning of known (but uncharted) czech characters
-    czech_characters = {"š":"s", "ě":"e", "č":"c", "ř":"r", "ž":"z", "ý":"y", "á":"a", "í":"i", "é":"e", "ú":"u", "ů":"u", "ť":"t", "ď":"d", "ň":"n", "ó":"o",
-                        "Š":"S", "Ě":"E", "Č":"C", "Ř":"R", "Ž":"Z", "Ý":"Y", "Á":"A", "Í":"I", "É":"E", "Ú":"U", "Ů":"U", "Ť":"T", "Ď":"D", "Ň":"N", "Ó":"O"}
-    for v, k in czech_characters.items():
-        string=re.sub(v,czech_characters[v],string)
+    if parameters['remove_diacritics'] == True:
+        czech_characters = {"š":"s", "ě":"e", "č":"c", "ř":"r", "ž":"z", "ý":"y", "á":"a", "í":"i", "é":"e", "ú":"u", "ů":"u", "ť":"t", "ď":"d", "ň":"n", "ó":"o", "Š":"S", "Ě":"E", "Č":"C", "Ř":"R", "Ž":"Z", "Ý":"Y", "Á":"A", "Í":"I", "É":"E", "Ú":"U", "Ů":"U", "Ť":"T", "Ď":"D", "Ň":"N", "Ó":"O"}
+        for v, k in czech_characters.items():
+            string=re.sub(v,czech_characters[v],string)
+    
     morse_dict = {" ":"",
                # Special characters
                ".":".-.-.-",
@@ -118,12 +121,19 @@ def code(string):
     output="|"
     for letter in string:
         if letter in morse_dict:
-            output+=(morse_dict[letter]+"|")
+            output += (morse_dict[letter]+"|")
+        # Process an unrecognized character
+        elif parameters['unrec_keep'] == True:
+            output += letter	# Keep the character unmodified (don't convert to morse)
+        elif parameters['unrec_replace'] == True:
+            output += "(unrecognized character)"	# Replace the character with an error string
+        elif parameters['unrec_ignore'] == True:
+            output += ''	# Skip the character
         else:
-            ## Optional: Unrecognized characters can be:
-            #output+=letter                         # 1. Passed to the output
-            output+="(unrecognized character)"   # 2. Replaced with an error string
-            #output+=""                             # 3. Omitted
+            pass	# This should never happen
+        
     ## Optional: |C|H| -> |CH| (czech morse code edit)
-    output=re.sub("\|\-\.\-\.\|\.\.\.\.\|","|----|",output) 
+    if parameters['replace_C_H_with_CH'] == True:
+        output=re.sub("\|\-\.\-\.\|\.\.\.\.\|","|----|",output)
+    
     return output

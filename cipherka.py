@@ -122,14 +122,20 @@ class Main:
         tx = self.w('settings_window').get_style().xthickness
         self.w('settings_window').move(x+sx+20,y)
     
+    def get_widget_type(self, widget):
+    	'''Gets the name of given widget'''
+    	return str(type(widget)).split('\'')[1:-1][0]	# Oops! :ú
+    
     def get_widgets_in_widget_rec(self, widgets):
+    	'''Lists all widgets belonging to given widget (recursively)'''
     	widgetlist = []
-    	container_types = ["<type 'gtk.Window'>", "<type 'gtk.VBox'>"]
+    	container_types = ['gtk.Window', 'gtk.VBox', 'gtk.HBox']
     	#print('get_widgets_in_widget_rec', widgets, rec)
     	#if str(type(widgetlist)) != "<type 'list'>":
     	#	widgetlist = [widgetlist]
     	for w in widgets:
-    		if str(type(w)) in container_types:	# If is a "container"
+    		#print (str(type(w)), self.get_widget_type(w))
+    		if self.get_widget_type(w) in container_types:	# If is a "container"
     			#print('rec', type(w))
     			widgetlist += self.get_widgets_in_widget_rec(w.get_children())
     			#print('ret', widgetlist)
@@ -138,11 +144,33 @@ class Main:
     			widgetlist.append(w)
     	return widgetlist
     
+    def get_widget_value(self, widget):
+    	#print ('get_widget_value', widget)
+    	type = self.get_widget_type(widget)
+    	if type in ('gtk.Entry'):	# If a widget can contain text
+    		return widget.get_text()
+    	elif type in ('gtk.CheckButton', 'gtk.RadioButton'):	# If a widget has a bool value
+    		return widget.get_active()
+    	elif type in ('gtk.Label'):	# Ignore non-input widgets
+    		#pass	# Don't do anything
+    		return None
+    	else:
+    		print('get_widget_value: unknown type:', type)
+    
     def on_start_clicked(self, widget):
         '''Calls the 'process' function and supplies it with necessary parameters.'''
-        parameters = []
+        parameters = {}
         input_widgets = self.get_widgets_in_widget_rec([self.builder.get_object('settings_window')])
-        print(input_widgets)
+        #print(input_widgets)
+
+        for input_widget in input_widgets:
+        	#print(input_widget)
+        	#print(gtk.Buildable.get_name(input_widget))
+        	content = self.get_widget_value(input_widget)
+        	if content != None:
+        		parameters[gtk.Buildable.get_name(input_widget)] = content
+        
+        print(parameters)
         #for widget in self.builder.get_object('settings_window').get_children():
         #	print(widget.type)
         #print(self.builder.get_object('settings_window').get_children())
@@ -165,7 +193,7 @@ class Main:
         print('Input: ' + input)
        
         # Call the selected module
-        output = self.process(input, selected_module, None) 
+        output = self.process(input, selected_module, parameters) 
         print('Output: ' + output)
         self.w('outputText').set_text(output)
     
@@ -201,7 +229,8 @@ class Main:
             # Create a settings window and hide it (for now)    
             #self.builder.add_from_file(sys.path[0] + '/modules/' + modulename + '.gui')
             self.modulenamegui = modulename + '.gui'
-            self.builder.add_from_file(os.path.join(self.path, 'modules', self.modulenamegui))            
+            #print(os.path.join(self.path, 'modules', self.modulenamegui))          
+            self.builder.add_from_file(os.path.join(self.path, 'modules', self.modulenamegui))  
         else:
             self.builder.add_from_file(os.path.join(self.path, 'modules', '__none__.gui'))
         
