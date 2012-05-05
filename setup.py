@@ -4,11 +4,8 @@ import glob
 
 setup(
     name="cipherka",
-    windows = [
-                  {
-                      'script': 'cipherka.py',
-                  }
-              ],
+    description="super program",
+    console=['cipherka.py'],
 
     options = {
                   'py2exe': {
