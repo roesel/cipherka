@@ -18,10 +18,11 @@ class Main:
         self.path = os.path.join(sys.path[0])
         #self.path = os.path.dirname(__file__).replace('\\library.zip','')
         #xml_file = open(os.path.join(path, 'gui.xml'))
-        if hasattr(sys,"frozen") and sys.frozen in ("windows_exe", "console_exe"):
+        '''if hasattr(sys,"frozen") and sys.frozen in ("windows_exe", "console_exe"):
             self.builder.add_from_file(os.path.join('./', 'gui.xml'))
         else:
-            self.builder.add_from_file(os.path.join(self.path, 'gui.xml'))
+            self.builder.add_from_file(os.path.join(self.path, 'gui.xml'))'''
+        self.builder.add_from_file('gui.xml')
         #self.builder.add_from_file(os.path.join(sys.path[0],'gui.xml')) 
         self.builder.connect_signals(self) 
               
